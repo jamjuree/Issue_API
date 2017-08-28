@@ -1,10 +1,25 @@
 import  {Router,Request,Response}   from 'express';
 
 import {MongoClient,ObjectID} from 'mongodb'
-const router:Router= Router();
+import * as myConfig from 'config';
+import {mongodb}  from '../helpers/mongodb';
 
-var mongodb;
+import * as auth  from '../helpers/auth';
+
+
+
+let config:any =  myConfig.get('Config');
+
+
+
+const router:Router= Router();
+// ใส่ตรงนี้คือ ต้อง เช็ค seciute หมด
+router.use(auth.authenticate());
+
+//var mongodb;
 // แสดงผล
+// เฉพาะ ulr นี้ ที่ เช็ค 
+//router.get('/',auth.authenticate(),(req:Request,res:Response)=>{
 router.get('/',(req:Request,res:Response)=>{
 
   //  res.send('hello wold')
@@ -117,18 +132,23 @@ router.put('/:id',(req:Request,res:Response)=>{
 });
 
 
+// MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
 
-MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
+// MongoClient.connect(config.mongodbUrl, (err, db)=> {
  
-    //console.log(err);
-    if(err){
-        console.log(err);
-    }
-    else
-        {
-              mongodb=db;
+//     //console.log(err);
+//     if(err){
+//         console.log(err);
+//     }
+//     else
+//         {
+//               mongodb=db;
 
-        }
+//         }
+
+/////////////
+
+
   // console.log( db.collection("company").find().toArray());
 
  //  db.collection("company").find().toArray().then((data)=>{
@@ -137,6 +157,6 @@ MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
 
 
        
-});
+// });
 
 export const CompanyControler: Router = router;

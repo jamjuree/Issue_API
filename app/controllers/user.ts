@@ -1,9 +1,13 @@
 import  {Router,Request,Response}   from 'express';
 
 import {MongoClient,ObjectID} from 'mongodb'
+import * as myConfig from 'config';
+import {mongodb}  from '../helpers/mongodb';
+
+
 const router:Router= Router();
 
-var mongodb;
+//var mongodb;
 
 router.post('/',(req:Request,res:Response)=>{
 
@@ -137,20 +141,20 @@ router.get('/',(req:Request,res:Response)=>{
 });
 
 
-MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
+// MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
  
-    //console.log(err);
-    if(err){
-        console.log(err);
-    }
-    else
-        {
-              mongodb=db;
+//     //console.log(err);
+//     if(err){
+//         console.log(err);
+//     }
+//     else
+//         {
+//               mongodb=db;
 
-        }
+//         }
  
 
        
-});
+// });
 
     export const UserControler: Router = router;

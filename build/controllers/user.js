@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var mongodb_1 = require("mongodb");
+var mongodb_2 = require("../helpers/mongodb");
 var router = express_1.Router();
-var mongodb;
+//var mongodb;
 router.post('/', function (req, res) {
     var data = req.body;
     // res.json(req.body);
-    mongodb.collection("user").insertOne(data).then(function (data) {
+    mongodb_2.mongodb.collection("user").insertOne(data).then(function (data) {
         res.json(data);
     });
 });
@@ -17,14 +18,14 @@ router.post('/search', function (req, res) {
         total: 0
     };
     var data = req.body;
-    mongodb.collection("user").find({
+    mongodb_2.mongodb.collection("user").find({
         userName: new RegExp("" + data.searchText) // แบบ %xx%
         // compName:   new RegExp(data.searchText)   แบบ byone
     }).skip(data.numPage * data.rowPerPage)
         .limit(data.rowPerPage)
         .toArray().then(function (rows) {
         ret.rows = rows;
-        mongodb.collection("user").find({
+        mongodb_2.mongodb.collection("user").find({
             userName: new RegExp("" + data.searchText) // แบบ %xx%
         }).count().then(function (data) {
             ret.total = data;
@@ -35,7 +36,7 @@ router.post('/search', function (req, res) {
 // แสดงผล  by ID
 router.get('/findById/:id', function (req, res) {
     var id = new mongodb_1.ObjectID(req.params.id);
-    mongodb.collection("user").findOne({ _id: id }).then(function (data) {
+    mongodb_2.mongodb.collection("user").findOne({ _id: id }).then(function (data) {
         // console.log(data);
         res.json(data);
     });
@@ -43,7 +44,7 @@ router.get('/findById/:id', function (req, res) {
 router.delete('/:id', function (req, res) {
     var id = new mongodb_1.ObjectID(req.params.id); // req.params.id;
     //  res.send('hello wold')
-    mongodb.collection("user").deleteOne({ _id: id }).then(function (data) {
+    mongodb_2.mongodb.collection("user").deleteOne({ _id: id }).then(function (data) {
         // console.log(data);
         res.json(data);
     });
@@ -53,7 +54,7 @@ router.put('/:id', function (req, res) {
     var id = new mongodb_1.ObjectID(req.params.id); // req.params.id;
     var data = req.body;
     //  res.send('hello wold')
-    mongodb.collection("user").updateOne({ _id: id }, data).then(function (data) {
+    mongodb_2.mongodb.collection("user").updateOne({ _id: id }, data).then(function (data) {
         // console.log(data);
         res.json(data);
     });
@@ -74,19 +75,20 @@ router.get('/', function (req, res) {
     //           res.json(data);
     //      });
     //  res.send('hello wold')
-    mongodb.collection("user").find().toArray().then(function (data) {
+    mongodb_2.mongodb.collection("user").find().toArray().then(function (data) {
         // console.log(data);
         res.json(data);
     });
 });
-mongodb_1.MongoClient.connect("mongodb://localhost:27017/issuedb", function (err, db) {
-    //console.log(err);
-    if (err) {
-        console.log(err);
-    }
-    else {
-        mongodb = db;
-    }
-});
+// MongoClient.connect("mongodb://localhost:27017/issuedb", (err, db)=> {
+//     //console.log(err);
+//     if(err){
+//         console.log(err);
+//     }
+//     else
+//         {
+//               mongodb=db;
+//         }
+// });
 exports.UserControler = router;
 //# sourceMappingURL=D:/MSC/Issue_API/controllers/user.js.map

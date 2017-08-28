@@ -7,7 +7,8 @@ import {IssueControler} from './controllers/issue'
 import {MongoClient} from 'mongodb'
 import *  as  bobyParser from 'body-parser'
 import *  as  cors from 'cors'
-
+import *  as  auth from './helpers/auth'
+import { LoginController } from './controllers/login';
 
 const app : express.Application = express();
 
@@ -25,11 +26,14 @@ app.use(bobyParser.urlencoded(
 
 ));
 
+app.use(auth.initialize());
+
 
 app.use('/company' ,CompanyControler);
 app.use('/customer' ,CustomerControler);
 app.use('/user' ,UserControler);
 app.use('/issue' ,IssueControler);
+app.use('/login', LoginController);
 //var mongodb;
 
 
