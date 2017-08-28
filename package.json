@@ -1,0 +1,23 @@
+{
+  "name": "Issue_API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./build/server",
+    "prestart": "tsc -p .",
+    "init-server": "tsc -p ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.0.36",
+    "@types/mongodb": "^2.2.9",
+    "@types/node": "^8.0.20",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31"
+  }
+}
